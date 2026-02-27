@@ -1,0 +1,27 @@
+services:
+  # ── FastAPI Backend ──────────────────────────────────────────────────────
+  - type: web
+    name: titanic-chat-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile.backend
+    plan: free
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false          # set manually in Render dashboard
+      - key: GROQ_MODEL
+        value: llama-3.3-70b-versatile
+    healthCheckPath: /health
+
+  # ── Streamlit Frontend ───────────────────────────────────────────────────
+  - type: web
+    name: titanic-chat-frontend
+    runtime: docker
+    dockerfilePath: ./Dockerfile.frontend
+    plan: free
+    envVars:
+      - key: BACKEND_URL
+        fromService:
+          name: titanic-chat-backend
+          type: web
+          property: host
+          envVarKey: RENDER_BACKEND_URL

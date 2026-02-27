@@ -1,0 +1,40 @@
+# Secrets — NEVER commit these
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Generated chart images (ephemeral)
+backend/static/*.png
+backend/static/*.jpg
+
+# Node.js (no longer used — project is pure Python/Streamlit)
+node_modules/
+frontend/node_modules/
+frontend/.next/
+frontend/package-lock.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

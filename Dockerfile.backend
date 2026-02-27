@@ -1,0 +1,20 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies required for matplotlib/pandas and basic operations
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the entire project structure so that relative paths work
+# We will copy the backend directory into /app/backend
+COPY backend/ /app/backend/
+
+# Set Python path so it can find 'backend' module
+ENV PYTHONPATH=/app
+
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]

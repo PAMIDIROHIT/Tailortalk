@@ -1,0 +1,11 @@
+# Root requirements.txt — used by Streamlit Community Cloud
+streamlit>=1.32.0
+requests>=2.31.0
+pandas>=2.2.0
+numpy>=1.26.0
+matplotlib>=3.8.2
+seaborn>=0.13.2
+langchain>=0.1.0
+langchain-core>=0.1.0
+langchain-groq>=0.1.0
+groq>=0.4.0
