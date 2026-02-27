@@ -81,7 +81,7 @@ graph TB
     UI --> APP
     APP --> SB
     APP -->|HTTP POST /api/chat| API
-    APP -->|HTTP GET /static/plot_*.png| STATIC
+    APP -->|HTTP GET /static/plot.png| STATIC
     CSS --> APP
     API --> SCHEMA
     API --> AGENT
@@ -91,7 +91,7 @@ graph TB
     M2 -->|quota exceeded| M3
     M3 -->|quota exceeded| M4
     AGENT -->|read| CSV
-    AGENT -->|exec() + savefig| PNG
+    AGENT -->|exec + savefig| PNG
     STATIC --> PNG
 
     style Client fill:#EFF6FF,stroke:#BFDBFE
@@ -138,8 +138,8 @@ sequenceDiagram
 
     GROQ-->>-AGENT: Python code string
 
-    AGENT->>AGENT: _clean_code() — strip markdown fences
-    AGENT->>AGENT: exec(code, namespace)<br/>{df, pd, np, plt, sns, PLOT_PATH}
+    AGENT->>AGENT: clean_code - strip markdown fences
+    AGENT->>AGENT: exec code in namespace df pd np plt sns PLOT_PATH
 
     alt Visualisation query
         AGENT->>FS: plt.savefig(PLOT_PATH)
@@ -147,10 +147,10 @@ sequenceDiagram
         AGENT->>AGENT: image_url = "/static/plot_<uuid>.png"
     end
 
-    alt exec() fails
+    alt exec fails
         AGENT->>+GROQ: Retry with error context
         GROQ-->>-AGENT: Corrected Python code
-        AGENT->>AGENT: exec(corrected_code, namespace)
+        AGENT->>AGENT: exec corrected code in namespace
     end
 
     AGENT->>AGENT: Capture stdout as text response
