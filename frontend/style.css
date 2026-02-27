@@ -1,0 +1,450 @@
+/* ==========================================================================
+   Titanic Chat Agent — Premium SaaS Light Theme
+   Target: Streamlit 1.49.x
+   Design system: Stripe / Linear / Notion inspired
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..700&display=swap');
+
+/* 1 ── GLOBAL RESET & BASE ─────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, [data-testid="stAppViewContainer"], .stApp {
+    background-color: #F7F8FA !important;
+    color: #111827 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 15px;
+}
+
+/* Hide Streamlit default chrome */
+#MainMenu                        { display: none !important; }
+footer                           { display: none !important; }
+[data-testid="stDecoration"]     { display: none !important; }
+[data-testid="stStatusWidget"]   { display: none !important; }
+header[data-testid="stHeader"]   { height: 0 !important; background: transparent !important; }
+[data-testid="stToolbar"]        { display: none !important; }
+
+/* 2 ── LAYOUT ───────────────────────────────────────────────────────────── */
+
+/* Main column — give breathing room at the bottom for the chat input */
+.main .block-container {
+    padding: 1.5rem 2rem 7rem 2rem !important;
+    max-width: 900px !important;
+}
+
+/* 3 ── PAGE HEADER ─────────────────────────────────────────────────────── */
+
+.chat-header {
+    text-align: center;
+    padding: 2rem 1rem 1.5rem;
+    margin-bottom: 1.25rem;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F0F4FF 100%);
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.chat-header h1 {
+    font-size: 1.9rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.03em;
+    color: #0F172A !important;
+    margin: 0 0 0.4rem 0 !important;
+}
+.chat-header p {
+    color: #64748B !important;
+    font-size: 0.95rem;
+    margin: 0 !important;
+}
+
+/* 4 ── WELCOME CARD ────────────────────────────────────────────────────── */
+
+.welcome {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.75rem 2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.welcome h3 {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: #1E293B !important;
+    margin: 0 0 1.1rem 0 !important;
+}
+.welcome-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+.wcard {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.85rem;
+    color: #374151;
+    transition: border-color 0.15s;
+}
+.wcard:hover { border-color: #93C5FD; }
+.wcard-icon  { font-size: 1.3rem; line-height: 1; }
+.wcard b     { color: #0F172A; font-size: 0.88rem; }
+.wcard small { color: #6B7280; font-size: 0.78rem; }
+.welcome-hint {
+    color: #9CA3AF !important;
+    font-size: 0.82rem !important;
+    margin: 0 !important;
+    text-align: center;
+}
+
+/* 5 ── CHAT MESSAGES ───────────────────────────────────────────────────── */
+
+[data-testid="stChatMessage"] {
+    background: transparent !important;
+    border: none !important;
+    padding: 0.1rem 0 !important;
+    margin-bottom: 1rem !important;
+    gap: 0.75rem !important;
+}
+
+/* Remove default stChatMessageContent background */
+[data-testid="stChatMessageContent"] {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+}
+
+/* USER bubble ── right-aligned blue pill */
+[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"])
+[data-testid="stChatMessageContent"] {
+    background: #EFF6FF !important;
+    border: 1.5px solid #BFDBFE !important;
+    border-radius: 18px 18px 4px 18px !important;
+    padding: 0.75rem 1.1rem !important;
+    color: #1E40AF !important;
+    font-weight: 450;
+    margin-left: auto;
+    max-width: 78% !important;
+}
+
+/* ASSISTANT bubble ── left-aligned white card */
+[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"])
+[data-testid="stChatMessageContent"] {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 4px 18px 18px 18px !important;
+    padding: 1rem 1.25rem !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    max-width: 90% !important;
+}
+
+/* Avatar circles */
+[data-testid="chatAvatarIcon-user"] {
+    background: #DBEAFE !important;
+    border-radius: 50% !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    font-size: 1.1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+[data-testid="chatAvatarIcon-assistant"] {
+    background: #D1FAE5 !important;
+    border-radius: 50% !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    font-size: 1.1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Text inside chat bubbles */
+[data-testid="stChatMessageContent"] p {
+    font-size: 0.95rem !important;
+    line-height: 1.7 !important;
+    color: #1F2937 !important;
+    margin-bottom: 0.35rem !important;
+}
+[data-testid="stChatMessageContent"] strong,
+[data-testid="stChatMessageContent"] b {
+    color: #0F172A !important;
+    font-weight: 600 !important;
+}
+
+/* Code blocks */
+[data-testid="stChatMessageContent"] code {
+    background: #F1F5F9 !important;
+    color: #1E293B !important;
+    padding: 0.15rem 0.4rem !important;
+    border-radius: 5px !important;
+    font-size: 0.83em !important;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace !important;
+    border: 1px solid #E2E8F0 !important;
+}
+[data-testid="stChatMessageContent"] pre {
+    background: #F8FAFC !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+    padding: 0.9rem 1rem !important;
+    overflow-x: auto !important;
+}
+
+/* Tables delivered in bot response */
+[data-testid="stChatMessageContent"] table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    font-size: 0.87rem !important;
+    margin: 0.6rem 0 !important;
+}
+[data-testid="stChatMessageContent"] th {
+    background: #F1F5F9 !important;
+    color: #334155 !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 0.85rem !important;
+    border: 1px solid #E2E8F0 !important;
+    text-align: left !important;
+}
+[data-testid="stChatMessageContent"] td {
+    padding: 0.45rem 0.85rem !important;
+    border: 1px solid #E2E8F0 !important;
+    color: #1E293B !important;
+}
+[data-testid="stChatMessageContent"] tr:nth-child(even) td {
+    background: #F8FAFC !important;
+}
+
+/* Images / charts inside messages */
+[data-testid="stChatMessageContent"] img {
+    border-radius: 12px !important;
+    border: 1px solid #E2E8F0 !important;
+    max-width: 100% !important;
+    margin-top: 0.6rem !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important;
+    display: block !important;
+}
+/* st.image() wraps in stImage */
+[data-testid="stImage"] {
+    margin-top: 0.75rem !important;
+}
+[data-testid="stImage"] img {
+    border-radius: 12px !important;
+    border: 1px solid #E2E8F0 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important;
+    max-width: 100% !important;
+    display: block !important;
+}
+
+/* 6 ── CHAT INPUT BAR ──────────────────────────────────────────────────── */
+
+/* The outer container */
+[data-testid="stChatInput"] {
+    background: #FFFFFF !important;
+    border: 1.5px solid #CBD5E1 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+    padding: 0 !important;
+    overflow: visible !important;
+}
+[data-testid="stChatInput"]:focus-within {
+    border-color: #3B82F6 !important;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15), 0 2px 12px rgba(0,0,0,0.08) !important;
+}
+
+/* The textarea */
+[data-testid="stChatInputTextArea"],
+[data-testid="stChatInput"] textarea {
+    background: transparent !important;
+    color: #111827 !important;
+    font-size: 0.97rem !important;
+    font-family: 'Inter', sans-serif !important;
+    padding: 0.75rem 1rem !important;
+    border: none !important;
+    outline: none !important;
+    resize: none !important;
+    caret-color: #3B82F6 !important;
+}
+[data-testid="stChatInputTextArea"]::placeholder,
+[data-testid="stChatInput"] textarea::placeholder {
+    color: #94A3B8 !important;
+    font-size: 0.95rem !important;
+}
+
+/* Send button — Streamlit 1.44+ uses button[data-testid="stChatInputSubmitButton"] */
+button[data-testid="stChatInputSubmitButton"] {
+    background: #2563EB !important;
+    border-radius: 10px !important;
+    border: none !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+    margin: 6px 8px 6px 0 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: background-color 0.15s, transform 0.1s !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    flex-shrink: 0 !important;
+}
+button[data-testid="stChatInputSubmitButton"]:hover {
+    background: #1D4ED8 !important;
+    transform: scale(1.05) !important;
+}
+button[data-testid="stChatInputSubmitButton"]:active {
+    transform: scale(0.97) !important;
+}
+button[data-testid="stChatInputSubmitButton"] svg {
+    fill: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+    width: 18px !important;
+    height: 18px !important;
+    display: block !important;
+}
+/* Override Streamlit's own opacity-0 on empty input */
+[data-testid="stChatInput"] button[data-testid="stChatInputSubmitButton"] {
+    opacity: 1 !important;
+}
+
+/* 7 ── SIDEBAR ─────────────────────────────────────────────────────────── */
+
+[data-testid="stSidebar"] {
+    background: #FFFFFF !important;
+    border-right: 1px solid #E2E8F0 !important;
+}
+[data-testid="stSidebarContent"],
+[data-testid="stSidebar"] > div:first-child {
+    background: #FFFFFF !important;
+    padding: 1.25rem 1rem !important;
+}
+
+/* Sidebar brand header */
+.sb-head {
+    padding: 0.5rem 0.25rem 1rem;
+    border-bottom: 1px solid #F1F5F9;
+    margin-bottom: 0.75rem;
+}
+.sb-headtitle {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0F172A;
+}
+.sb-headsub {
+    font-size: 0.72rem;
+    color: #94A3B8;
+    margin-top: 0.15rem;
+    letter-spacing: 0.01em;
+}
+
+/* Backend status pills */
+.status-ok  { color: #16A34A; font-size: 0.78rem; font-weight: 500; padding: 2px 0; }
+.status-warn{ color: #D97706; font-size: 0.78rem; font-weight: 500; padding: 2px 0; }
+.status-err { color: #DC2626; font-size: 0.78rem; font-weight: 500; padding: 2px 0; }
+
+/* Sidebar section title */
+[data-testid="stSidebar"] h4,
+[data-testid="stSidebar"] .stMarkdown p strong {
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Expander */
+[data-testid="stSidebar"] [data-testid="stExpander"] {
+    border: none !important;
+    background: transparent !important;
+    margin-bottom: 0.25rem !important;
+}
+[data-testid="stSidebar"] [data-testid="stExpander"] summary,
+[data-testid="stSidebar"] details summary {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    padding: 0.4rem 0 !important;
+}
+
+/* Sidebar suggestion buttons */
+[data-testid="stSidebar"] button[data-testid="stBaseButton-secondary"],
+[data-testid="stSidebar"] .stButton > button {
+    background: #F8FAFC !important;
+    border: 1px solid #E2E8F0 !important;
+    color: #374151 !important;
+    font-size: 0.78rem !important;
+    font-family: 'Inter', sans-serif !important;
+    border-radius: 8px !important;
+    text-align: left !important;
+    padding: 0.45rem 0.7rem !important;
+    white-space: normal !important;
+    height: auto !important;
+    line-height: 1.45 !important;
+    width: 100% !important;
+    margin-bottom: 0.25rem !important;
+    transition: all 0.15s !important;
+    box-shadow: none !important;
+}
+[data-testid="stSidebar"] button[data-testid="stBaseButton-secondary"]:hover,
+[data-testid="stSidebar"] .stButton > button:hover {
+    background: #EFF6FF !important;
+    border-color: #93C5FD !important;
+    color: #1D4ED8 !important;
+}
+
+/* Clear chat button — red tint */
+[data-testid="stSidebar"] button[kind="secondary"]:last-of-type,
+[data-testid="stSidebar"] [data-testid="stBaseButton-secondary"]:last-of-type {
+    background: #FEF2F2 !important;
+    border-color: #FECACA !important;
+    color: #B91C1C !important;
+    margin-top: 0.25rem !important;
+}
+[data-testid="stSidebar"] button[kind="secondary"]:last-of-type:hover {
+    background: #FEE2E2 !important;
+}
+
+/* 8 ── SPINNER ─────────────────────────────────────────────────────────── */
+
+.stSpinner > div {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+.stSpinner p, [data-testid="stSpinner"] p {
+    color: #3B82F6 !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+}
+
+/* 9 ── HORIZONTAL RULES ─────────────────────────────────────────────────── */
+hr {
+    border: none !important;
+    border-top: 1px solid #E2E8F0 !important;
+    margin: 0.85rem 0 !important;
+}
+
+/* 10 ── TOOLTIP / ALERTS ────────────────────────────────────────────────── */
+[data-testid="stAlert"] {
+    border-radius: 10px !important;
+    font-size: 0.85rem !important;
+    padding: 0.65rem 0.9rem !important;
+}
+
+/* 11 ── SCROLLBAR ───────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
